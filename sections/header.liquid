@@ -1,0 +1,56 @@
+{% assign main_menu = linklists[section.settings.main_menu] %}
+
+<header class="site-header fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50">
+  <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <!-- Logo -->
+    <div class="flex items-center space-x-4">
+      {% if section.settings.logo != blank %}
+        <a href="/" class="block">
+          <img src="{{ section.settings.logo | img_url: '200x' }}" 
+               alt="{{ shop.name }}"
+               class="h-8 w-auto">
+        </a>
+      {% else %}
+        <a href="/" class="text-2xl font-bold text-green-700">{{ shop.name }}</a>
+      {% endif %}
+    </div>
+
+    <!-- Navigation -->
+    <div class="hidden lg:flex space-x-8">
+      {% for link in main_menu.links %}
+        <a href="{{ link.url }}" 
+           class="text-gray-600 hover:text-green-700 transition-colors"
+           {% if link.current %}aria-current="page"{% endif %}>
+          {{ link.title }}
+        </a>
+      {% endfor %}
+    </div>
+
+    <!-- Cart -->
+    <a href="/cart" class="relative">
+      {% render 'icon-cart' %}
+      <span class="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+        {{ cart.item_count }}
+      </span>
+    </a>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

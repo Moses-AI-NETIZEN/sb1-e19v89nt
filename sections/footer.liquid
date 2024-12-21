@@ -1,0 +1,65 @@
+<footer class="bg-gray-900 text-white py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Company Info -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">{{ shop.name }}</h3>
+        {{ section.settings.company_description }}
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">{{ section.settings.menu_title }}</h3>
+        <ul class="space-y-2">
+          {% for link in linklists[section.settings.footer_menu].links %}
+            <li>
+              <a href="{{ link.url }}" class="text-gray-400 hover:text-white transition-colors">
+                {{ link.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">Contact</h3>
+        {{ section.settings.contact_info }}
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+      © {{ 'now' | date: "%Y" }} {{ shop.name }}. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "company_description",
+      "label": "Company description"
+    },
+    {
+      "type": "text",
+      "id": "menu_title",
+      "label": "Menu title",
+      "default": "Quick Links"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Footer menu"
+    },
+    {
+      "type": "richtext",
+      "id": "contact_info",
+      "label": "Contact information"
+    }
+  ]
+}
+{% endschema %}
